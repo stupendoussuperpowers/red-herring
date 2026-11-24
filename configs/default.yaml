@@ -1,0 +1,23 @@
+# Only the experimental knobs. Override from the CLI: rh -o model=Qwen/Qwen3-14B -o run_name=q14b rq1
+
+run_name: popqa          # results go to outputs/<run_name>/
+seed: 0
+model: Qwen/Qwen3-8B     # 7B-14B open models
+n_questions: 1000        # PopQA sample size (200 for the pilot)
+
+modes:                   # name: thinking token budget (0 = thinking off, null = uncapped)
+  no_think: 0
+  think_512: 512
+  think_full: null
+
+de:
+  candidates: 20         # distractor candidates scored per question
+  weak_max: 0.2          # DE < weak_max -> weak
+  hard_min: 0.8          # DE > hard_min -> hard
+
+mixtures:                # 1 relevant passage + these distractors
+  gold_only:  {hard: 0, weak: 0}
+  weak4:      {hard: 0, weak: 4}
+  hard1weak3: {hard: 1, weak: 3}
+  hard2weak2: {hard: 2, weak: 2}
+  hard4:      {hard: 4, weak: 0}
